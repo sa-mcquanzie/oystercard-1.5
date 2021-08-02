@@ -116,5 +116,17 @@ describe OysterCard do
       
       expect(subject.touch_out station).to eq('Incomplete journey')
     end
+
+    it 'creates an incomplete journey if the user touches in without touching out' do
+      peckham_rye = double('Station')
+      london_bridge = double('Station')
+
+      allow(peckham_rye).to receive(:name) { 'Peckham Rye'}
+      allow(london_bridge).to receive(:name) { 'London Bridge'}
+
+      subject.touch_in peckham_rye
+
+      expect(subject.touch_in london_bridge).to eq('Previous journey incomplete')
+    end
   end
 end
