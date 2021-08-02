@@ -38,6 +38,10 @@ class OysterCard
   def touch_out station
     @in_transit = false
 
+    unless @history.empty? || @history.last.has_key?(:finish)
+      @history.last[:finish] = station
+    end
+
     "Touched out at #{station.name}"
   end
 

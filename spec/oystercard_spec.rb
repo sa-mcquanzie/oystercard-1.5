@@ -10,6 +10,7 @@ describe OysterCard do
   context 'after it is created' do
     it 'allows the user to add money to the balance' do
       subject.top_up 500
+
       expect(subject.balance).to eq(1000)
     end
 
@@ -88,7 +89,20 @@ describe OysterCard do
 
       subject.touch_in station
 
-      expect(subject.history.first[:start]).to eq(station)
+      expect(subject.history.last[:start]).to eq(station)
+    end
+
+    it 'completes journeys when the user touches out' do
+      peckham_rye = double('Station')
+      london_bridge = double('Station')
+
+      allow(peckham_rye).to receive(:name) { 'Peckham Rye'}
+      allow(london_bridge).to receive(:name) { 'London Bridge'}
+
+      subject.touch_in peckham_rye
+      subject.touch_out london_bridge
+
+      expect(subject.history.last[:finish]).to eq(london_bridge)
     end
   end
 end
