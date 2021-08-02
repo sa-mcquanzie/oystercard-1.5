@@ -24,4 +24,8 @@ class OysterCard
   def touch_in station
     "Touched in at #{station.name}"
   end
+
+  def touch_out station
+    "Touched out at #{station.name}"
+  end
 end

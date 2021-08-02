@@ -35,5 +35,13 @@ describe OysterCard do
 
       expect(subject.touch_in station). to eq("Touched in at Peckham Rye")
     end
+
+    it 'allows a user to touch out at a station' do
+      station = double('Station')
+
+      allow(station).to receive(:name) { 'London Bridge'}
+
+      expect(subject.touch_out station). to eq("Touched out at London Bridge")
+    end
   end
 end
