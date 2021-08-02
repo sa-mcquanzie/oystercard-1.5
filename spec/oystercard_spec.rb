@@ -38,11 +38,15 @@ describe OysterCard do
     end
 
     it 'allows a user to touch out at a station' do
-      station = double('Station')
+      peckham_rye = double('Station')
+      london_bridge = double('Station')
 
-      allow(station).to receive(:name) { 'London Bridge'}
+      allow(peckham_rye).to receive(:name) { 'Peckham Rye'}
+      allow(london_bridge).to receive(:name) { 'London Bridge'}
 
-      expect(subject.touch_out station). to eq("Touched out at London Bridge")
+      subject.touch_in peckham_rye
+
+      expect(subject.touch_out london_bridge). to eq("Touched out at London Bridge")
     end
 
     it 'prevents a user from travelling with less than the minimum fare' do
@@ -103,6 +107,14 @@ describe OysterCard do
       subject.touch_out london_bridge
 
       expect(subject.history.last[:finish]).to eq(london_bridge)
+    end
+
+    it 'creates an incomplete journey if the user touches out without touching in' do
+      station = double(station)
+
+      allow(station).to receive(:name) { 'Peckham Rye'}
+      
+      expect(subject.touch_out station).to eq('Incomplete journey')
     end
   end
 end

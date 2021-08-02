@@ -40,9 +40,13 @@ class OysterCard
 
     unless @history.empty? || @history.last.has_key?(:finish)
       @history.last[:finish] = station
+      return "Touched out at #{station.name}"
     end
 
-    "Touched out at #{station.name}"
+    @history = [{}] if @history.empty?
+
+    @history[-1] = { :start => nil, :finish => nil}
+    return 'Incomplete journey'
   end
 
   def in_transit?
