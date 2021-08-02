@@ -1,5 +1,5 @@
 class OysterCard
-  attr_accessor :balance
+  attr_accessor :balance, :history
 
   INITIAL_BALANCE = 500
   MIN_BALANCE = 250
@@ -7,6 +7,7 @@ class OysterCard
 
   def initialize balance = INITIAL_BALANCE
     @balance = balance
+    @history = []
     @in_transit = false
     @max_balance = MAX_BALANCE
     @min_balance = MIN_BALANCE
@@ -34,7 +35,7 @@ class OysterCard
 
   def touch_out station
     @in_transit = false
-    
+
     "Touched out at #{station.name}"
   end
 

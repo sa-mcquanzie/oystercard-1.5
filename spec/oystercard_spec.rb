@@ -76,5 +76,9 @@ describe OysterCard do
 
       expect(subject.in_transit?).to eq(false)
     end
+
+    it "stores the user's travel history" do
+      expect(subject.history).to eq([])
+    end
   end
 end
