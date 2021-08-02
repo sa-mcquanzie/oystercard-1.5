@@ -11,7 +11,13 @@ class OysterCard
 
   def top_up amount
     new_balance = @balance + amount
+
     raise 'Top-up exceeds maximum balance' if new_balance > @max_balance
+
     @balance += amount
+  end
+
+  def deduct fare
+    @balance -= fare
   end
 end
