@@ -20,4 +20,8 @@ class OysterCard
   def deduct fare
     @balance -= fare
   end
+
+  def touch_in station
+    "Touched in at #{station.name}"
+  end
 end

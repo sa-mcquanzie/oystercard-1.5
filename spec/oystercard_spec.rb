@@ -27,5 +27,13 @@ describe OysterCard do
 
       expect(subject.balance).to eq(250)
     end
+
+    it 'allows a user to touch in at a station' do
+      station = double('Station')
+
+      allow(station).to receive(:name) { 'Peckham Rye'}
+
+      expect(subject.touch_in station). to eq("Touched in at Peckham Rye")
+    end
   end
 end
