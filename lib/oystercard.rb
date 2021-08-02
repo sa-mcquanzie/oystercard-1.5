@@ -2,17 +2,17 @@ class OysterCard
   attr_accessor :balance, :history
 
   INITIAL_BALANCE = 500
-  MIN_BALANCE = 250
   MAX_BALANCE = 10000
-  MAX_FARE = 700
+  MIN_FARE = 250
+  PENALTY_FARE = 700
 
   def initialize balance = INITIAL_BALANCE
     @balance = balance
     @history = []
     @in_transit = false
     @max_balance = MAX_BALANCE
-    @min_balance = MIN_BALANCE
-    @max_fare = MAX_FARE
+    @min_fare = MIN_FARE
+    @penalty_fare = PENALTY_FARE
   end
 
   def top_up amount
@@ -28,12 +28,14 @@ class OysterCard
   end
 
   def touch_in station
-    raise 'Insufficient funds' if @balance < @min_balance
+    raise 'Insufficient funds' if @balance < @min_fare
   
     unless @history.empty?
       if @history.last.has_key?(:start) && !@history.last.has_key?(:finish)
-        @history[-1] = { :start => nil, :finish => nil }
-        deduct @max_fare
+        @history.last[:finish] = nil
+        
+        deduct @penalty_fare
+
         return 'Previous journey incomplete' 
       end
     end
@@ -42,9 +44,7 @@ class OysterCard
 
     @history << { :start => station }
 
-    if @history.size == 1 || @history.last.has_key?(:finish)
-      return "Touched in at #{station.name}"
-    end
+    "Touched in at #{station.name}"
   end
 
   def touch_out station
@@ -56,8 +56,8 @@ class OysterCard
     end
 
     @history = [{}] if @history.empty?
+    @history[-1] = { :start => nil, :finish => station }
 
-    @history[-1] = { :start => nil, :finish => nil }
     return 'Incomplete journey'
   end
 

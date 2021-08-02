@@ -110,7 +110,7 @@ describe OysterCard do
     end
 
     it 'creates an incomplete journey if the user touches out without touching in' do
-      station = double(station)
+      station = double('Station')
 
       allow(station).to receive(:name) { 'Peckham Rye'}
       
