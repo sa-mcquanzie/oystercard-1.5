@@ -53,5 +53,15 @@ describe OysterCard do
 
       expect { subject.touch_in station }.to raise_error 'Insufficient funds'
     end
+
+    it 'marks the user as in transit when they touch in' do
+      station = double('Station')
+
+      allow(station).to receive(:name) { 'Peckham Rye'}
+
+      subject.touch_in station
+
+      expect(subject.in_transit?).to eq(true)
+    end
   end
 end
