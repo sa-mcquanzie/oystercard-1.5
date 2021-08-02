@@ -43,5 +43,15 @@ describe OysterCard do
 
       expect(subject.touch_out station). to eq("Touched out at London Bridge")
     end
+
+    it 'prevents a user from travelling with less than the minimum fare' do
+      subject.deduct 251
+
+      station = double('Station')
+
+      allow(station).to receive(:name) { 'Peckham Rye'}
+
+      expect { subject.touch_in station }.to raise_error 'Insufficient funds'
+    end
   end
 end

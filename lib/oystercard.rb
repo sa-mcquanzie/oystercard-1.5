@@ -2,11 +2,13 @@ class OysterCard
   attr_accessor :balance
 
   INITIAL_BALANCE = 500
+  MIN_BALANCE = 250
   MAX_BALANCE = 10000
 
   def initialize balance = INITIAL_BALANCE
     @balance = balance
     @max_balance = MAX_BALANCE
+    @min_balance = MIN_BALANCE
   end
 
   def top_up amount
@@ -22,6 +24,7 @@ class OysterCard
   end
 
   def touch_in station
+    raise 'Insufficient funds' if @balance < @min_balance
     "Touched in at #{station.name}"
   end
 
