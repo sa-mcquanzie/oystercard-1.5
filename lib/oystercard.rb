@@ -30,6 +30,8 @@ class OysterCard
 
     @in_transit = true
 
+    @history << { :start => station }
+
     "Touched in at #{station.name}"
   end
 

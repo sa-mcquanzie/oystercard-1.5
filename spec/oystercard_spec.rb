@@ -77,8 +77,18 @@ describe OysterCard do
       expect(subject.in_transit?).to eq(false)
     end
 
-    it "stores the user's travel history" do
+    it 'has a place to store journey history' do
       expect(subject.history).to eq([])
+    end
+
+    it 'adds new journeys to the history' do
+      station = double('Station')
+
+      allow(station).to receive(:name) { 'Peckham Rye'}
+
+      subject.touch_in station
+
+      expect(subject.history.first[:start]).to eq(station)
     end
   end
 end
