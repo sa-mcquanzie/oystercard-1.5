@@ -63,5 +63,18 @@ describe OysterCard do
 
       expect(subject.in_transit?).to eq(true)
     end
+
+    it 'marks the user as no longer in transit when they touch out' do
+      peckham_rye = double('Station')
+      london_bridge = double('Station')
+
+      allow(peckham_rye).to receive(:name) { 'Peckham Rye'}
+      allow(london_bridge).to receive(:name) { 'London Bridge'}
+
+      subject.touch_in peckham_rye
+      subject.touch_out london_bridge
+
+      expect(subject.in_transit?).to eq(false)
+    end
   end
 end

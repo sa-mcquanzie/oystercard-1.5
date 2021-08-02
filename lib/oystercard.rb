@@ -28,11 +28,13 @@ class OysterCard
     raise 'Insufficient funds' if @balance < @min_balance
 
     @in_transit = true
-    
+
     "Touched in at #{station.name}"
   end
 
   def touch_out station
+    @in_transit = false
+    
     "Touched out at #{station.name}"
   end
 
